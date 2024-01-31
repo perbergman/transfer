@@ -1,0 +1,101 @@
+const { BlobServiceClient } = require("@azure/storage-blob");
+const multipart = require("parse-multipart");
+const crypto = require("crypto");
+
+// https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage
+
+module.exports = async function (context, req) {
+  context.log(
+    "JavaScript HTTP trigger function processed a request for file upload."
+  );
+
+  if (req.method !== "POST") {
+    context.res = { status: 405, body: "Only POST requests are allowed." };
+    return;
+  }
+
+  try {
+    const AZURE_STORAGE_CONNECTION_STRING = process.env["AzureWebJobsStorage"];
+    const containerName = "uploads";
+    const blobName = "a/b/d/yourfilename4"; // You can dynamically set the file name
+
+    const blobServiceClient = BlobServiceClient.fromConnectionString(
+      AZURE_STORAGE_CONNECTION_STRING
+    );
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+    const bodyBuffer = Buffer.from(req.body);
+    multipart.Parse(bodyBuffer, "multipart/form-data");
+    const boundary = multipart.getBoundary(req.headers["content-type"]);
+    console.log("boundary: " + boundary)
+    try {
+        const parts = multipart.Parse(bodyBuffer, boundary);
+    console.log("parts: " + parts.length);
+    for(var i=0;i<parts.length;i++){
+        var part = parts[i];
+        console.log("part: " + part)
+        // will be:
+        // { filename: 'A.txt', type: 'text/plain', 
+        //		data: <Buffer 41 41 41 41 42 42 42 42> }
+    }
+} catch (error) {
+    console.log("error: " + error);
+}
+
+    await calcHash(bodyBuffer);
+
+    const uploadBlobResponse = await blockBlobClient.upload(
+      bodyBuffer,
+      bodyBuffer.length
+    );
+    console.log(
+      `Upload block blob ${blobName} successfully`,
+      uploadBlobResponse.requestId
+    );
+    await blockBlobClient.setMetadata({ myblob: "BlockBlob" });
+    getProperties(blockBlobClient);
+
+    console.log(
+      `Blob was uploaded successfully. requestId: ${uploadBlobResponse.requestId}`
+    );
+  } catch (error) {
+    context.res = {
+      status: 500,
+      body: `Exception: ${error.message}`,
+    };
+  }
+};
+
+async function getProperties(blobClient) {
+  const properties = await blobClient.getProperties();
+  console.log(blobClient.name + " properties: ");
+
+  for (const property in properties) {
+    if (property === "contentMD5") {
+      console.log(`    contentMD5: ${properties[property].toString("base64")}`); // this is a base64 string
+    }
+    switch (property) {
+      // nested properties are stringified and returned as strings
+      case "metadata":
+      case "objectReplicationRules":
+        console.log(`    ${property}: ${JSON.stringify(properties[property])}`);
+        break;
+      default:
+        console.log(`    ${property}: ${properties[property]}`);
+        break;
+    }
+  }
+}
+
+async function calcFileHash(filename) {
+  const content = fs.readFileSync(filename, "utf8");
+  checkHash(content);
+}
+
+async function calcHash(buffer) {
+  const hash = crypto.createHash("md5");
+  hash.update(buffer);
+  const sha256Hash = hash.digest("base64");
+  console.log("Hash " + sha256Hash);
+}
