@@ -1,0 +1,13 @@
+{
+  "bindings": [
+    {
+      "name": "mySbMsg",
+      "type": "serviceBusTrigger",
+      "direction": "in",
+      "queueName": "request-queue",
+      "connection": "moekkel667_SERVICEBUS",
+      "isSessionsEnabled": false,
+      "concurrency": 10
+    }
+  ]
+}
