@@ -7,9 +7,9 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
+    "@anzp/azure-function-multipart": "^3.1.0",
     "@azure/storage-blob": "^12.17.0",
-    "azure-storage": "^2.10.7",
-    "busboy": "^1.6.0"
+    "azure-storage": "^2.10.7"
   },
   "devDependencies": {
     "azure-functions-core-tools": "^4.x"

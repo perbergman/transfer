@@ -16,6 +16,7 @@ function App() {
         formData.append("userpic1", "chris2.jpg");  
         formData.append('file', file, file.name);
         formData.append("userpic2", "chris2.jpg");
+        formData.append("loc", "/opt/supplier");
         }
 
         try {
