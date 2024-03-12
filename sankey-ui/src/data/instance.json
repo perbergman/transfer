@@ -1,0 +1,56 @@
+[
+  {
+    "contract": "ERC20_V1",
+    "contract_address": "0x735064D5ecF4fa2D145B87C60A734f04d9b70553",
+    "init_parameters": "USDToken,USD",
+    "key": "funds/USD",
+    "state": "LINKED",
+    "created": "2024-03-08 18:21:12.301973 +00:00",
+    "modified": null
+  },
+  {
+    "contract": "ERC20_V1",
+    "contract_address": "0xf1970f1d8860e3169728eA29B8D5C189893753a4",
+    "init_parameters": "EURToken,EUR",
+    "key": "funds/EUR",
+    "state": "LINKED",
+    "created": "2024-03-08 18:21:16.584940 +00:00",
+    "modified": null
+  },
+  {
+    "contract": "ERC20_V1",
+    "contract_address": "0x59E4fD714b73B733cD8d1c66f82238e087257C29",
+    "init_parameters": "MDLToken,MDL",
+    "key": "funds/MDL",
+    "state": "LINKED",
+    "created": "2024-03-08 18:21:20.944358 +00:00",
+    "modified": null
+  },
+  {
+    "contract": "ERC20_V1",
+    "contract_address": "0x28C3CC08B4E14BD10591F43565c8AF69acafCB54",
+    "init_parameters": "MDLToken,MDL",
+    "key": "common/MDL",
+    "state": "LINKED",
+    "created": "2024-03-08 18:21:25.202269 +00:00",
+    "modified": null
+  },
+  {
+    "contract": "ERC20_V1",
+    "contract_address": "0x41560cE0e5b2Ee13Cf917703F44AaEfC5B57a3BD",
+    "init_parameters": "USDToken,USD",
+    "key": "common/USD",
+    "state": "LINKED",
+    "created": "2024-03-08 18:21:28.469127 +00:00",
+    "modified": null
+  },
+  {
+    "contract": "ERC20_V1",
+    "contract_address": "0x05CFcc5c600945df11BB799344bE75429Dc72097",
+    "init_parameters": "EURToken,EUR",
+    "key": "common/EUR",
+    "state": "LINKED",
+    "created": "2024-03-08 18:21:32.633401 +00:00",
+    "modified": null
+  }
+]
